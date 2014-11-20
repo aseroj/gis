@@ -31,3 +31,5 @@
 */
 Route::any('/', 'HomeController@showWelcome');
 Route::controller('/air', 'AirController');
+// Route::controller('map', 'MapController');
+Route::any('heat_map', 'MapController@getIndex');
