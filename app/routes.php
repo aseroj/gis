@@ -11,7 +11,23 @@
 |
 */
 
-Route::get('/', function()
-{
-	return View::make('hello');
-});
+/** ------------------------------------------
+*  Errors !
+*  ------------------------------------------
+*/
+// App::missing(function($exception) {
+//     return Response::view('errors.missing', array(), 404);
+// });
+
+/** ------------------------------------------
+*  Admin Routes
+*  ------------------------------------------
+*/
+// Route::controller('/users', 'UsersAdminController');
+
+/** ------------------------------------------
+*  Frontend Routes
+*  ------------------------------------------
+*/
+Route::any('/', 'HomeController@showWelcome');
+Route::controller('/air', 'AirController');

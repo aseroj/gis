@@ -15,9 +15,13 @@ class HomeController extends BaseController {
 	|
 	*/
 
-	public function showWelcome()
-	{
+	public function showWelcome() {
 		return View::make('hello');
 	}
+
+	// public function showAir() {
+	// 	$air = USAir::get();
+	// 	return View::make('air')->with('usair', $air);
+	// }
 
 }
