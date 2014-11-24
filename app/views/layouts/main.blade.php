@@ -25,6 +25,7 @@
           <li><a href="{{ url('air') }}">Air</a></li>
           <li><a href="{{ url('earthquake') }}">Earthquake</a></li>
           <li><a href="{{ url('heat_map') }}">Heat Map</a></li>
+          <li><a href="{{ url('databasemunip') }}">Data Crunch</a></li>
         </ul>
       </div>
     </div>

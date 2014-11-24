@@ -7,8 +7,6 @@ class MapController extends BaseController {
 //    $air = USEarthquake::all()->take(10)->toArray();
     $air = USEarthquake::all()->take(10);
     $this->layout->content = View::make('heatmap')->with('usair', $air);
-
-
   }
 
   public function postGo(){

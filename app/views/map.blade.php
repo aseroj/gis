@@ -38,6 +38,13 @@ var getDistance = function(p1, p2) {
   return d; // returns the distance in meter
 };
 
+function squishDB()
+{
+  var lat;
+  var long;
+  
+}
+
 var map;
 var mean = 1000;
 function initialize() {
