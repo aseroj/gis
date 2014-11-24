@@ -9,9 +9,23 @@ class MapController extends BaseController {
     $this->layout->content = View::make('heatmap')->with('usair', $air);
 
 
-    // lat lng depth
+  }
 
-    // return Response::json($response);
+  public function postGo(){
+      $air = Input::get('filter');
+      $res = '';$out = '';
+      if($air && $air=='earthquake'){
+          $res = USEarthquake::all()->take(20);
+      }
+
+      $out = '[';
+      foreach($res as $result){
+          $out .= 'new google.maps.LatLng('.$result->lat.','.$result->lng.' ),';
+      }
+      $out .= ']';
+      $response = array('status'=>'success','out'=>$out);
+
+      return Response::json($response);
   }
 
 }
