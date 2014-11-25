@@ -31,7 +31,11 @@ class Geocoder {
         if($dom_state == 'OK'){
           //If status is OK, then at least one result should be here.
           $result = $dom->getElementsByTagName('result')->item(2);
-          $postalcode = $result->getElementsByTagName('formatted_address')->item(0)->nodeValue;
+          if($result) {
+            $postalcode = $result->getElementsByTagName('formatted_address')->item(0)->nodeValue;
+          } else {
+            $postalcode = 'N/A';
+          }
           // foreach($result->getElementsByTagName('address_component') as $comp){
           //   // if($comp->getElementsByTagName('type')->item(0)->nodeValue == 'postal_code'){
           //     $postalcode = $comp->getElementsByTagName('short_name')->item(0)->nodeValue;

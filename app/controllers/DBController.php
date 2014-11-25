@@ -7,11 +7,18 @@ class DBController extends BaseController {
     // $air = USEarthquake::all()->take(10);
     // $this->layout->content = View::make('dbmunip')->with('usair', $air);
 
-    $eq = USEarthquake::all()->take(6);
+
+    //todo: if doesn't have county, remain empty(NULL)
+
+    $eq = USEarthquake::all();
     foreach($eq as $val) {
       $county = Geocoder::county($val->lat,$val->lng);
-      $county_clean = str_replace(' County', '', explode(',', $county));
-      echo '<br /><h1>'.$county_clean[0].'</h1>';
+      $county = explode(',', $county);
+      $county_clean = str_replace(' County', '', $county[0]);
+      $val->county = (!empty($county_clean) ? $county_clean : NULL);
+      $val->save();
+
+      // echo '<br /><h1>'.$county_clean[0].'</h1>';
     }
 
   }

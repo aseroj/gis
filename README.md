@@ -1,13 +1,13 @@
 # Tool for Living Conditions (WIP)
 
-[![Build Status](https://travis-ci.org/etrepat/baum.png?branch=master)](https://travis-ci.org/etrepat/baum)
+[![Build Status](https://travis-ci.org/kapooch/gis.svg)](https://travis-ci.org/kapooch/gis)
+(http://img.shields.io/badge/license-MIT-green.svg)
 
 Tool for Living Conditions is a simple Google Maps based tool for showing areas with cleaner air and less earthquake and is based on [Laravel 4's](http://laravel.com/) Eloquent ORM.
 
 ## Documentation
 
 * [About Tool for Living Conditions](#about)
-## * [Further information](#further-information)
 
 <a name="about"></a>
 ## Tool for Living Conditions
