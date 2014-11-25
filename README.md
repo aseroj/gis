@@ -12,7 +12,8 @@ Tool for Living Conditions is a simple Google Maps based tool for showing areas 
 <a name="about"></a>
 ## Tool for Living Conditions
 
-PROJECT ABOUT GOES HERE
+The goal of this project is to provide a tool that will allow users to find a location that fits their preferences.
+The user can select and assign weights to number of filters(crime rate, air pollution, etc.) and receive a visual display of how different regions match-up to his/her preferences.
 
 ## License
 
