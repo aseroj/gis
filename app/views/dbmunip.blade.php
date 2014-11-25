@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
 
-<script>
+<script type="text/javascript">
 
 var revgeocoder = new google.maps.Geocoder();
 var infowindow = new google.maps.InfoWindow();
@@ -11,32 +11,25 @@ function crunchDB()
 
 }
 
-function getRegion()
+function getRegion({{$usair}})
 {
-  var latlng = new google.maps.LatLng(-33.4560656,-70.655883);
-  revgeocoder.geocode({'latLng': latlng}, function(results, status)
-  {
-    if (status == google.maps.GeocoderStatus.OK)
-      {
+  @foreach($usair as $air)
+  <?php sleep(2) ?>
+  var latlng = new google.maps.LatLng({{$air->lat}},{{$air->lng}});
+  revgeocoder.geocode({'latLng': latlng}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
         infowindow.setContent(results[1].formatted_address);
-        alert(results[1].formatted_address);
-      }
-      else
-      {
+        console.log(results[1].formatted_address);
+      } else {
         alert("Geocoder failed due to: " + status);
       }
   });
-    
-    @foreach($usair as $air)
-    {
-      alert($air->lat);
-    }
-    @endforeach
+  @endforeach
 }
 
 </script>
 
-<button onclick="getRegion()">Get Region</button>
+<button onclick="getRegion();">Get Region</button>
 
 <div class="col col-sm-9">
   <div class="table-responsive">
