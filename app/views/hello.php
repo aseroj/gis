@@ -11,12 +11,15 @@
 		h1 { font-size: 32px; margin: 16px 0 0 0; }
 		img { -webkit-transition: all 0.5s ease 0s; -moz-transition: all 0.5s ease 0s; -o-transition: all 0.5s ease 0s; -ms-transition: all 0.5s ease 0s; transition: all 0.5s ease 0s; cursor:pointer; }
 		img:hover { -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); -ms-transform: rotate(360deg); -o-transform: rotate(360deg); transform: rotate(360deg); }
+
+
+
 	</style>
 </head>
 <body>
 	<div class="welcome">
-		<a href="/live" title="Laravel PHP Framework">
-			<img src="/img/globe.png" alt="Laravel PHP Framework">
+		<a href="/air" title="Live">
+			<img src="/img/globe.png" alt="Live">
 		</a>
 		<h1>Where do you want to live ?</h1>
 	</div>
