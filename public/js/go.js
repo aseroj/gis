@@ -11,9 +11,9 @@ $(document).ready(function() {
             type: 'POST',
             data: {filter:$chk},
             success: function(result) {
-                console.log(result.out);
+                //console.log(result.out);
                 // mapData(result.out);
-                // redraw(result.out);
+                 redraw(result.out);
             }
         });
     });

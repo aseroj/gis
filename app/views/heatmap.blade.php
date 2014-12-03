@@ -8,7 +8,7 @@
 // Adding Data Points
 var map, pointarray, heatmap;
 
-
+var globalMap;
 
 function mapData(latlng){
     if(latlng == null || latlng==''){
@@ -40,33 +40,36 @@ function initialize() {
     data: pointArray
   });
 
-  heatmap.setMap(map);
+  //heatmap.setMap(map);
 }
 
-function reinitialize(postback) {
-  var mapOptions = {
-    zoom: 3,
-    center: new google.maps.LatLng(37.0625,-95.677068),
-    mapTypeId: google.maps.MapTypeId.SATELLITE
-  };
-
-  map = new google.maps.Map(document.getElementById('map-canvas'),
-      mapOptions);
-
-  if(postback == null || postback==''){
-    var pointArray = new google.maps.MVCArray(mapData(''));
-  }else{
-    var pointArray = new google.maps.MVCArray(mapData(postback));
+function reinitialize() {
+  var data;
+  console.log(globalMap);
+  for
+  {
+    data.push_back(new google.maps.LatLng(globalMap[0][0], globalMap[0][1]);
   }
+  
+  var data =[new google.maps.LatLng(43.85920000, -128.13140000),
+  new google.maps.LatLng(43.79820000, -128.40830000),
+  new google.maps.LatLng(41.87290000, -119.61100000),
+  new google.maps.LatLng(36.80583330, -121.53600000),
+  new google.maps.LatLng(31.72250000, -40.69150000),
+  new google.maps.LatLng(41.92780000, -119.62760000),new google.maps.LatLng(41.90090000, -119.62240000),new google.maps.LatLng(37.27470000, -97.61580000),new google.maps.LatLng(44.04020000, -129.06190000),new google.maps.LatLng(31.66830000, -40.60880000),new google.maps.LatLng(41.88120000, -119.65450000)];
+  //console.log(data);
 
   heatmap = new google.maps.visualization.HeatmapLayer({
-    data: pointArray
+    data: data
   });
-
   heatmap.setMap(map);
 }
+
 function redraw(map){
-    google.maps.event.addDomListener(window, 'load', reinitialize(map));
+
+    globalMap = map;
+    //console.log(globalMap);
+    reinitialize();
 }
 
 function toggleHeatmap() {

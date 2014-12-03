@@ -10,6 +10,8 @@ class MapController extends BaseController {
   }
 
   public function postGo(){
+      $array = array();
+
       $air = Input::get('filter');
       $res = '';$out = '';
       if($air && $air=='earthquake'){
@@ -20,14 +22,15 @@ class MapController extends BaseController {
       $cnt = count($res);
       $i=0;
       foreach($res as $result){
-        if(++$i == $cnt){
-          $out .= 'new google.maps.LatLng('.$result->lat.','.$result->lng.' )';
+        /*if(++$i == $cnt){
+          $out .= 'new google.maps.LatLng('.$result->lat.', '.$result->lng.')';
         }else{
-          $out .= 'new google.maps.LatLng('.$result->lat.','.$result->lng.' ),';
-        }
+          $out .= 'new google.maps.LatLng('.$result->lat.', '.$result->lng.'),';
+        }*/
+        array_push($array, $result->lat.', '.$result->lng);
       }
       $out .= ']';
-      $response = array('status'=>'success','out'=>$out);
+      $response = array('status'=>'success','out'=>$array);
 
       return Response::json($response);
   }
