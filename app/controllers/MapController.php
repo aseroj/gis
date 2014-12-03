@@ -17,8 +17,14 @@ class MapController extends BaseController {
       }
 
       $out = '[';
+      $cnt = count($res);
+      $i=0;
       foreach($res as $result){
+        if(++$i == $cnt){
+          $out .= 'new google.maps.LatLng('.$result->lat.','.$result->lng.' )';
+        }else{
           $out .= 'new google.maps.LatLng('.$result->lat.','.$result->lng.' ),';
+        }
       }
       $out .= ']';
       $response = array('status'=>'success','out'=>$out);
