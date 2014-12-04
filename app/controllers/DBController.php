@@ -22,5 +22,9 @@ class DBController extends BaseController {
     }
 
   }
-
+  public function getLatlng() {
+    foreach(){
+      Geocoder::latlng($county, $state);
+    }
+  }
 }
