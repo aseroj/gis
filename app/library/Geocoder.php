@@ -7,7 +7,8 @@ class Geocoder {
   * @param String Address - Make sure to include at least the street address, city and state.
   * @return String - Zip code on success, blank if a zip code is failed to be retrieved.
   */
-  public static function county($lat,$lng) {
+  public static function county($lat,$lng)
+  {
     $rurl = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&latlng=".$lat.",".$lng."";
     // $rurl = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&latlng=61.94490000,-151.81590000";
 
@@ -50,10 +51,9 @@ class Geocoder {
       return '';
     }
   }
-
-
-  function latlng($address, $city, $state) {
-    $keyword = $address.' '.$city.' , '.$state;
+  public static function latlng($county, $state)
+  {
+    $keyword = $county." , ".$state.' ,US';
     $ura = rawurlencode($keyword);
     $rurl = "http://maps.googleapis.com/maps/api/geocode/xml?sensor=false&address=$ura";
 
@@ -69,23 +69,20 @@ class Geocoder {
 
     $dom = new DOMDocument();
     $res = $dom->loadXML($response);
-
-
     if($res){
-      if($status = $dom->getElementsByTagName('status')->item(0)){
+      if($status = $dom->getElementsByTagName('status')->item(0))
+      {
         $dom_state = $status->nodeValue;
         if($dom_state != 'OK'){sleep(2);}
         if($dom_state == 'OK'){
           //If status is OK, then at least one result should be here.
-          $result = $dom->getElementsByTagName('result')->item(0);
-          $postalcode = '';
-          foreach($result->getElementsByTagName('address_component') as $comp){
-            if($comp->getElementsByTagName('type')->item(0)->nodeValue == 'postal_code'){
-              $postalcode = $comp->getElementsByTagName('short_name')->item(0)->nodeValue;
-            }
-          }
+          $result = $dom->getElementsByTagName('geometry')->item(0);
+          $lat = 0;
+          $lng = 0;
+          $lat = $result->getElementsByTagName('lat')->item(0)->nodeValue;
+          $lng = $result->getElementsByTagName('lng')->item(0)->nodeValue;
           // wait for 2 seconds
-          return $postalcode;
+          return array($lat, $lng);
         }else{
           return '';
         }
