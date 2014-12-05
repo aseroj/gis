@@ -48,15 +48,19 @@ function reinitialize() {
   var data;
   var array = [];
   var i = 0;
-
-  for(i=0;i<globalMap.length/2;i++){
-    array.push( new google.maps.LatLng(globalMap[i], globalMap[i+1]))
+  //Weighted point, weight = 3 means 3 heatmap poitns on top of each other
+  array.push({location: new google.maps.LatLng(globalMap[0], globalMap[1]),
+    weight: globalMap[2]/2});
+  for(i=3;i<globalMap.length/2;i++)
+    {
+      array.push(new google.maps.LatLng(globalMap[i], globalMap[i+1]));
+        i++;
   }
 
   heatmap = new google.maps.visualization.HeatmapLayer({
     data: array
   });
-  heatmap.set('radius', 50);
+  heatmap.set('radius', 20);
   heatmap.setMap(map);
 }
 
