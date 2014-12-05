@@ -32,5 +32,6 @@
 Route::any('/', 'HomeController@showWelcome');
 Route::controller('/databasemunip', 'DBController');
 Route::controller('/air', 'AirController');
+Route::controller('/crime', 'CrimeController');
 // Route::controller('map', 'MapController');
 Route::controller('/heat_map', 'MapController');
