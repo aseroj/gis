@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 04, 2014 at 11:09 PM
+-- Generation Time: Dec 05, 2014 at 06:34 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.6.2
 
@@ -1105,6 +1105,27 @@ INSERT INTO `us_air` (`id`, `county_code`, `county`, `state`, `lat`, `lng`, `day
 (1044, 56039, 'Teton County', 'WY', '43.85363200', '-110.63144910', 365, 350, 15, 0, 0, 0, 64, 48, 40, 0, 0, 351, 0, 12, 2, '2014-12-04 19:00:27'),
 (1045, 56041, 'Uinta County', 'WY', '41.21073970', '-110.61689210', 365, 348, 17, 0, 0, 0, 84, 47, 40, 0, 0, 364, 0, 0, 1, '2014-12-04 19:00:28'),
 (1046, 56045, 'Weston County', 'WY', '43.92702240', '-104.47233010', 365, 334, 31, 0, 0, 0, 77, 50, 40, 0, 0, 357, 8, 0, 0, '2014-12-04 19:00:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `us_crime`
+--
+
+CREATE TABLE IF NOT EXISTS `us_crime` (
+`id` int(11) NOT NULL,
+  `crime_type` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `us_crime`
+--
+
+INSERT INTO `us_crime` (`id`, `crime_type`, `created_at`, `updated_at`) VALUES
+(1, 'criminal', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 'high jack', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -4846,6 +4867,12 @@ ALTER TABLE `us_air`
  ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `us_crime`
+--
+ALTER TABLE `us_crime`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `us_earthquake`
 --
 ALTER TABLE `us_earthquake`
@@ -4860,6 +4887,11 @@ ALTER TABLE `us_earthquake`
 --
 ALTER TABLE `us_air`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1062;
+--
+-- AUTO_INCREMENT for table `us_crime`
+--
+ALTER TABLE `us_crime`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `us_earthquake`
 --
