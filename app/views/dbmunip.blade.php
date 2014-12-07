@@ -10,10 +10,8 @@
         <tr>
           <th>#</th>
           <th>County</th>
-          <th>State</th>
-          <th>AQI</th>
-          <th>Lat</th>
-          <th>Lng</th>
+          <th>Instances</th>
+          <th>Average_mag</th>
         </tr>
       </thead>
       <tbody>
@@ -21,10 +19,8 @@
         <tr>
           <td>{{ $air->id }}</td>
           <td>{{ $air->county }}</td>
-          <td>{{ $air->state }}</td>
-          <td>{{ $air->aqi_median }}</td>
-          <td>{{ $air->lat}}</td>
-          <td>{{ $air->lng }}</td>
+          <td>{{ $air->instances }}</td>
+          <td>{{ $air->average_mag}}</td>
         </tr>
         @endforeach
       </tbody>
