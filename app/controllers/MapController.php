@@ -25,48 +25,42 @@ class MapController extends BaseController {
     */
       $array = array();
       $weight = 0;
-      $air = Input::get('filter');
+      $filter = Input::get('filter');
       //$userWeight = 0;
       $res = '';$out = '';
 
-      if($air && $air=='earthquake')
-      {
-          $res = USEarthquake::all();
-          $userWeight = (int)Input::get('weight_air');
+      if($filter){
+        if(strpos($filter,',')){
+          $tokenized = explode(',',$filter);
+          $res = $tokenized[0]::all();
+          $tokenized = array_combine(range(1, count($tokenized)), $tokenized);
+          foreach($tokenized as $key){
+            $res = $res->merge($key::all());
+          }
+        }else{
+          $res = $filter::all();
+        }
       }
-      else if($air && $air=='air')
-      {
-        $res = USAir::all();
-        $userWeight = Input::get('weight_earthquake');
-      }
-      /*else if($air && $air=='crime')
-      {
-        $res = USCrime::all();
-        $userWeight = Input::get('weight_crime');
-      }*/
-      else
-      {
-        //MERGE DB's
-        $res = USAir::all();
-      }
+
 
       $cnt = count($res);
       $i=0;
       foreach($res as $result)
       {
-        if($air && $air=='earthquake')
-        {
-          $weight = $result->mag;
-        }
-        else if($air=='air')
-        {
-          $weight = $result->aqi_median/5;
-        }
+        // if($air && $air=='earthquake')
+        // {
+        //   $weight = $result->mag;
+        // }
+        // else if($air=='air')
+        // {
+        //   $weight = $result->aqi_median/5;
+        // }
       /*  else if($air && $air=='crime')
         {
           $res = USCrime::all();
           $weight = $result->total_crime/10;
         }*/
+        $weight = 1;
         array_push($array, $result->lat, $result->lng, $weight);
       }
       $response = array('status'=>'success','out'=>$array);

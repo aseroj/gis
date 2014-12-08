@@ -178,7 +178,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <h3 class="star-desc"></h3>
                 <div class="modal-body">
                     <div class="checkbox">
-                      <label><input type="checkbox" class="chk" name="filter" value="air">Air Quality</label>
+                      <label><input type="checkbox" class="chk" name="filter" value="USAir">Air Quality</label>
                     </div>
                     <label>Weight</label>
                     <select class="form-control" name="weight_air">
@@ -194,7 +194,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         <option value="10">10</option>
                     </select>
                     <div class="checkbox">
-                      <label><input type="checkbox" class="chk" name="filter" value="earthquake">Earthquake</label>
+                      <label><input type="checkbox" class="chk" name="filter" value="USEarthquake">Earthquake</label>
                     </div>
                     <div class="">
                         <label>Weight</label>
@@ -212,7 +212,7 @@ google.maps.event.addDomListener(window, 'load', initialize);
                         </select>
                     </div>
                     <div class="checkbox">
-                      <label><input type="checkbox" class="chk" name="filter" value="crime">Crime</label>
+                      <label><input type="checkbox" class="chk" name="filter" value="USCrime">Crime</label>
                     </div>
                     <div class="">
                       <label>Weight</label>
