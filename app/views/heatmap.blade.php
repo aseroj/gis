@@ -117,6 +117,8 @@ function displayWorstCounties()
 
 function redraw(map){
     globalMap = map;
+    $('.panel-a').text(globalMap[globalMap.length - 1]);
+    $('.panel-e').text(globalMap[globalMap.length - 2]);
     reinitialize();
 }
 
@@ -166,9 +168,13 @@ $(function() {$("[data-toggle=tooltip]").tooltip();});
       <button onclick="changeOpacity()">Change opacity</button>
       <button data-toggle="modal" data-target="#myModal">Filter</button>
     </div>
+    <div id="panel-right">
+      <h4>Air</h4>
+      <p class="panel-a"></p>
+      <h4>Earthquake</h4>
+      <p class="panel-e"></p>
+    </div>
     <div id="map-canvas"></div>
-
-
 
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">

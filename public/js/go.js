@@ -15,7 +15,8 @@ $(document).ready(function() {
             type: 'POST',
             data: {filter:$chk, wa:$wa, we:$we, wc:$wc},
             success: function(result) {
-                 redraw(result.out);
+                $('#panel-right').show();
+                redraw(result.out);
             }
         });
     });
