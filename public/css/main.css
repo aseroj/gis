@@ -1,1 +1,2 @@
-#map-canvas { height: 700px; width: 700px;margin: 0px; padding: 0px }
+/*#map-canvas { height: 700px; width: 700px;margin: 0px; padding: 0px }*/
+.ctooltip, .ctooltip:hover, .ctooltip:active, .ctooltip:visited {text-decoration: none;color:#000;}

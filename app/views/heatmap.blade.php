@@ -86,10 +86,10 @@ function reinitialize()
   Display in top right corner
   */
   //Weighted point, weight = 3 means 3 heatmap poitns on top of each other
-  console.log(globalMap.length/3)
+  // console.log(globalMap.length/3);
   for(i=0;i<globalMap.length;i+=3)
     {
-    console.log(globalMap[i], globalMap[i+1], globalMap[i+2])
+    // console.log(globalMap[i], globalMap[i+1], globalMap[i+2]);
     array.push({location: new google.maps.LatLng(globalMap[i], globalMap[i+1]),
        weight: globalMap[i+2]});
   }
@@ -153,6 +153,8 @@ function changeOpacity() {
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
+
+$(function() {$("[data-toggle=tooltip]").tooltip();});
     </script>
 
 
@@ -179,9 +181,9 @@ google.maps.event.addDomListener(window, 'load', initialize);
                 <div class="modal-body">
                     <div class="checkbox">
                       <label><input type="checkbox" class="chk" name="filter" value="USAir">Air Quality</label>
-                    </div>
+                      <a data-original-title="Results are based on most recent survey. Denser and brighter areas mean high level of contamination. Data shown is based on AQI(Air Quality Index) median. Weights correspond to US categorization of AQI norms." data-toggle="tooltip" data-placement="right" class="ctooltip"><span class="glyphicon glyphicon-question-sign"></span></a>                    </div>
                     <label>Weight</label>
-                    <select class="form-control" name="weight_air">
+                    <select class="form-control" id="weight_air">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -195,10 +197,11 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     </select>
                     <div class="checkbox">
                       <label><input type="checkbox" class="chk" name="filter" value="USEarthquake">Earthquake</label>
+                      <a data-original-title="Results are based on 14 year survey. Denser and brighter areas mean more frequent and powerful seismic activity. Weights correspond to Reichter scale." data-toggle="tooltip" data-placement="right" class="ctooltip"><span class="glyphicon glyphicon-question-sign"></span></a>
                     </div>
                     <div class="">
                         <label>Weight</label>
-                        <select class="form-control" name="weight_earthquake">
+                        <select class="form-control" id="weight_earthquake">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -213,10 +216,10 @@ google.maps.event.addDomListener(window, 'load', initialize);
                     </div>
                     <div class="checkbox">
                       <label><input type="checkbox" class="chk" name="filter" value="USCrime">Crime</label>
-                    </div>
+                      <a data-original-title="Results are based on most recent survey. Denser and brighter areas mean high level of crime." data-toggle="tooltip" data-placement="right" class="ctooltip"><span class="glyphicon glyphicon-question-sign"></span></a>                    </div>
                     <div class="">
                       <label>Weight</label>
-                      <select class="form-control" name="weight_crime">
+                      <select class="form-control" id="weight_crime">
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>

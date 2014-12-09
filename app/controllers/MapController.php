@@ -27,6 +27,13 @@ class MapController extends BaseController {
       $weight = 0;
       $filter = Input::get('filter');
       //$userWeight = 0;
+
+      //ZAREH JAN, these are returning the selected weight in the box, do your magic...
+      $weightAir        = Input::get('wa');
+      $weightEarthquake = Input::get('we');
+      $weightCrime      = Input::get('wc');
+
+
       $res = '';$out = '';
 
       if($filter){

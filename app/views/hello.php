@@ -15,7 +15,7 @@
 </head>
 <body>
 	<div class="welcome">
-		<a href="/air" title="Live">
+		<a href="/heat_map" title="Live">
 			<img src="/img/globe.png" alt="Live">
 		</a>
 		<h1>Where do you want to live ?</h1>
