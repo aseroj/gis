@@ -73,6 +73,7 @@ function reinitialize()
   var data;
   var array = [];
   heatmap.setMap(null);
+  console.log(globalMap[globalMap.length - 1]);
   var i = 0;
   /*
   First 2 members of glboalMap are arrays
@@ -87,10 +88,10 @@ function reinitialize()
   */
   //Weighted point, weight = 3 means 3 heatmap poitns on top of each other
   // console.log(globalMap.length/3);
-  for(i=0;i<globalMap.length;i+=3)
+  for(i=0;i<globalMap.length - 1;i+=3)
     {
-    // console.log(globalMap[i], globalMap[i+1], globalMap[i+2]);
-    array.push({location: new google.maps.LatLng(globalMap[i], globalMap[i+1]),
+     //console.log(globalMap[i], globalMap[i+1], globalMap[i+2]);
+     array.push({location: new google.maps.LatLng(globalMap[i], globalMap[i+1]),
        weight: globalMap[i+2]});
   }
 
@@ -102,7 +103,7 @@ function reinitialize()
   heatmap.setMap(map);
   heatmap.setOptions ({
     dissipating: true,
-    maxIntensity: 100,
+    maxIntensity: 1000,
     radius: 30,
     opacity: 0.9,
     //dissipating: false

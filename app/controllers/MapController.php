@@ -7,9 +7,105 @@ class MapController extends BaseController {
     $air = USEarthquake::all()->take(10);
     $this->layout->content = View::make('heatmap')->with('usair', $air);
   }
+  private static function calcWorstEq($currValue)
+  {
+    $result = false;
+    if($currValue->mag > MapController::$w_eq[0])
+    {
+      MapController::$w_eq[0] = $currValue->mag;
+      MapController::$w_eq[1] = $currValue->county;
+    }
+
+    else if($currValue->mag > MapController::$w_eq[2])
+    {
+      MapController::$w_eq[2] = $currValue->mag;
+      MapController::$w_eq[3] = $currValue->county;
+    }
+    else if($currValue->mag > MapController::$w_eq[4])
+    {
+      MapController::$w_eq[4] = $currValue->mag;
+      MapController::$w_eq[5] = $currValue->county;
+    }
+
+  }
+
+  private static function calcWorstAir($currValue)
+  {
+    $result = false;
+    if($currValue->mag > MapController::$w_air[0])
+    {
+      MapController::$w_air[0] = $currValue->aqi_median;
+      MapController::$w_air[1] = $currValue->county;
+    }
+
+    else if($currValue->mag > MapController::$w_air[2])
+    {
+      MapController::$w_air[2] = $currValue->aqi_median;
+      MapController::$w_air[3] = $currValue->county;
+    }
+    else if($currValue->mag > MapController::$w_air[4])
+    {
+      MapController::$w_air[4] = $currValue->aqi_median;
+      MapController::$w_air[5] = $currValue->county;
+    }
+
+  }
+
+  public static function calcWeight($realWeight, $userWeight, $type)
+  {
+    $result = 1;
+
+    if($type == 'earthquake')
+    {
+      $realScaled = ($realWeight - 4)*10;
+      if($realScaled <= $userWeight)
+        $result = $realScaled;
+      else
+        $result = 2^($realScaled*$userWeight);
+    }
+    else if($type == 'air')
+    {
+      $realScaled = $realWeight/6;
+      if($realScaled <= $userWeight)
+        $result = $realScaled;
+      else
+        $result = 2^($realScaled*$userWeight);
+
+    }
+    else if($type == 'crime')
+    {
+      $realScaled = $realWeight/100;
+      if($realScaled <= $userWeight)
+        $result = $realScaled;
+      else
+        $result = 2^($realScaled*$userWeight);
+
+    }
+    return $result;
+  }
+
+  public static function resetWorstArrays()
+  {
+    unset(MapController::$w_air[0]);
+    unset(MapController::$w_air[1]);
+    unset(MapController::$w_air[3]);
+
+    unset(MapController::$w_eq[0]);
+    unset(MapController::$w_eq[1]);
+    unset(MapController::$w_eq[2]);
+
+    array_push(MapController::$w_air, 0, "");
+    array_push(MapController::$w_air, 0, "");
+    array_push(MapController::$w_air, 0, "");
+
+    array_push(MapController::$w_eq, 0, "");
+    array_push(MapController::$w_eq, 0, "");
+    array_push(MapController::$w_eq, 0, "");
+  }
 
   public function postGo()
   {
+    MapController::resetWorstArrays();
     /*
     To user bounds
     $north_east = whatever
@@ -29,14 +125,15 @@ class MapController extends BaseController {
       //$userWeight = 0;
 
       //ZAREH JAN, these are returning the selected weight in the box, do your magic...
-      $weightAir        = Input::get('wa');
-      $weightEarthquake = Input::get('we');
-      $weightCrime      = Input::get('wc');
+      $weightAir        = (int) Input::get('wa');
+      $weightEarthquake = (int) Input::get('we');
+      $weightCrime      = (int) Input::get('wc');
 
 
       $res = '';$out = '';
 
-      if($filter){
+      if($filter)
+      {
         if(strpos($filter,',')){
           $tokenized = explode(',',$filter);
           $res = $tokenized[0]::all();
@@ -47,32 +144,34 @@ class MapController extends BaseController {
         }else{
           $res = $filter::all();
         }
-      }
-
-
-      $cnt = count($res);
-      $i=0;
-      foreach($res as $result)
-      {
-        // if($air && $air=='earthquake')
-        // {
-        //   $weight = $result->mag;
-        // }
-        // else if($air=='air')
-        // {
-        //   $weight = $result->aqi_median/5;
-        // }
-      /*  else if($air && $air=='crime')
+        $cnt = count($res);
+        $i=0;
+        foreach($res as $result)
         {
-          $res = USCrime::all();
-          $weight = $result->total_crime/10;
-        }*/
-        $weight = 1;
+          if($result->mag)
+          {
+            $weight = MapController::calcWeight($result->mag, $weightEarthquake, 'earthquake');
+            MapController::calcWorstEq($result);
+          }
+          else if($result->aqi_median)
+          {
+            $weight = MapController::calcWeight($result->aqi_median, $weightAir, 'air');
+            MapController::calcWorstAir($result);
+          }
+          else if($result->total_crime)
+          {
+            $weight = MapController::calcWeight($result->total_crime, $weightCrime, 'crime');
+        }
+        //$weight = 1;
         array_push($array, $result->lat, $result->lng, $weight);
       }
+      array_push($array, $result->lat, $result->lng, MapController::$w_eq);
+      array_push($array, $result->lat, $result->lng, MapController::$w_air);
+
       $response = array('status'=>'success','out'=>$array);
 
-      return Response::json($response);
+    }
+    return Response::json($response);
       /*
       First 2 members of array should be worst air and worst eartquake counties.
       Worst earthquake can come from us_earthquake_county_Crunched
@@ -106,5 +205,9 @@ class MapController extends BaseController {
 
 
   }
+
+  private static $w_air = array();
+  private static $w_eq = array();
+
 
 }
