@@ -74,6 +74,7 @@ function reinitialize()
   var array = [];
   heatmap.setMap(null);
   console.log(globalMap[globalMap.length - 1]);
+  console.log(globalMap[globalMap.length-2]);
   var i = 0;
   /*
   First 2 members of glboalMap are arrays

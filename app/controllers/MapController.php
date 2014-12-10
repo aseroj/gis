@@ -32,18 +32,18 @@ class MapController extends BaseController {
   private static function calcWorstAir($currValue)
   {
     $result = false;
-    if($currValue->mag > MapController::$w_air[0])
+    if($currValue->aqi_median > MapController::$w_air[0])
     {
       MapController::$w_air[0] = $currValue->aqi_median;
       MapController::$w_air[1] = $currValue->county;
     }
 
-    else if($currValue->mag > MapController::$w_air[2])
+    else if($currValue->aqi_median > MapController::$w_air[2])
     {
       MapController::$w_air[2] = $currValue->aqi_median;
       MapController::$w_air[3] = $currValue->county;
     }
-    else if($currValue->mag > MapController::$w_air[4])
+    else if($currValue->aqi_median > MapController::$w_air[4])
     {
       MapController::$w_air[4] = $currValue->aqi_median;
       MapController::$w_air[5] = $currValue->county;
@@ -165,9 +165,9 @@ class MapController extends BaseController {
         //$weight = 1;
         array_push($array, $result->lat, $result->lng, $weight);
       }
-      array_push($array, $result->lat, $result->lng, MapController::$w_eq);
-      array_push($array, $result->lat, $result->lng, MapController::$w_air);
 
+      array_push($array,MapController::$w_air);
+      array_push($array,MapController::$w_eq);
       $response = array('status'=>'success','out'=>$array);
 
     }
