@@ -86,13 +86,11 @@ class MapController extends BaseController {
 
   public static function resetWorstArrays()
   {
-    unset(MapController::$w_air[0]);
-    unset(MapController::$w_air[1]);
-    unset(MapController::$w_air[3]);
+    unset($w_air);
+    unset($w_eq);
 
-    unset(MapController::$w_eq[0]);
-    unset(MapController::$w_eq[1]);
-    unset(MapController::$w_eq[2]);
+    $w_air = array();
+    $w_eq = array();
 
     array_push(MapController::$w_air, 0, "");
     array_push(MapController::$w_air, 0, "");
@@ -111,13 +109,6 @@ class MapController extends BaseController {
     $north_east = whatever
     $south_west = whatever
 
-    if($result->lat <= $north_east[0] && $result->lat >= $south_west[0])
-    {
-      if($result->lng <= $north_east[1] && $result->lat >= $south_west[1])
-      {
-        push
-      }
-    }
     */
       $array = array();
       $weight = 0;
@@ -128,6 +119,26 @@ class MapController extends BaseController {
       $weightAir        = (int) Input::get('wa');
       $weightEarthquake = (int) Input::get('we');
       $weightCrime      = (int) Input::get('wc');
+
+      $regNE = Input::get('ne');
+      $regSW = Input::get('sw');
+      $test = array();
+      if($regNE){
+        $regNE = str_replace('(','',$regNE);
+        $regNE = str_replace(')','',$regNE);
+        $regNEc = explode(',',$regNE);
+        $ne1 = floatval($regNEc[0]);
+        $ne2 = floatval($regNEc[1]);
+      }
+
+      if($regSW){
+        $regSW = str_replace('(','',$regSW);
+        $regSW = str_replace(')','',$regSW);
+        $regSWc = explode(',',$regSW);
+        $sw1 = floatval($regSWc[0]);
+        $sw2 = floatval($regSWc[1]);
+      }
+
 
 
       $res = '';$out = '';
@@ -148,26 +159,42 @@ class MapController extends BaseController {
         $i=0;
         foreach($res as $result)
         {
-          if($result->mag)
+          if(floatval($result->lat) <= $ne1 && floatval($result->lat) > $sw1)
           {
-            $weight = MapController::calcWeight($result->mag, $weightEarthquake, 'earthquake');
-            MapController::calcWorstEq($result);
+            if(floatval($result->lng) <= $ne2 && floatval($result->lng) > $sw2)
+            {
+              if($result->mag)
+              {
+                $weight = MapController::calcWeight($result->mag, $weightEarthquake, 'earthquake');
+                MapController::calcWorstEq($result);
+              }
+              else if($result->aqi_median)
+              {
+                $weight = MapController::calcWeight($result->aqi_median, $weightAir, 'air');
+                MapController::calcWorstAir($result);
+              }
+              else if($result->total_crime)
+              {
+                $weight = MapController::calcWeight($result->total_crime, $weightCrime, 'crime');
+              }
+              array_push($array, $result->lat, $result->lng, $weight);
+            }
           }
-          else if($result->aqi_median)
-          {
-            $weight = MapController::calcWeight($result->aqi_median, $weightAir, 'air');
-            MapController::calcWorstAir($result);
-          }
-          else if($result->total_crime)
-          {
-            $weight = MapController::calcWeight($result->total_crime, $weightCrime, 'crime');
         }
-        //$weight = 1;
-        array_push($array, $result->lat, $result->lng, $weight);
-      }
 
-      array_push($array,MapController::$w_air);
-      array_push($array,MapController::$w_eq);
+      $cleanAir = array();
+      $cleanEarth = array();
+
+      array_push($cleanAir,MapController::$w_air[1]);
+      array_push($cleanAir,MapController::$w_air[3]);
+      array_push($cleanAir,MapController::$w_air[5]);
+
+      array_push($cleanEarth, MapController::$w_eq[1]);
+      array_push($cleanEarth, MapController::$w_eq[3]);
+      array_push($cleanEarth, MapController::$w_eq[5]);
+
+      array_push($array,$cleanAir);
+      array_push($array,$cleanEarth);
       $response = array('status'=>'success','out'=>$array);
 
     }

@@ -9,6 +9,7 @@
 var map, pointarray, heatmap, regionBox, regionBounds;
 
 var globalMap;
+var selectRegion=0;
 
 function mapData(latlng){
     if(latlng == null || latlng==''){
@@ -44,29 +45,32 @@ function initialize() {
   // heatmap.setMap(map);
 }
 
-/*
-Draggable LatLng box for uzer to specify search region, activates on button click
-function displayRegionBox()
-{
+
+// Draggable LatLng box for uzer to specify search region, activates on button click
+function displayRegionBox() {
   regionBounds = new google.maps.LatLngBounds(
   new google.maps.LatLng(37.0625,-95.677068),
-  new google.maps.LatLng(37.1625,-95.647068)
+  new google.maps.LatLng(40.1625,-91.647068)
   );
 
 // Define a rectangle and set its editable property to true.
-regionBox = new google.maps.Rectangle({
-bounds: regionBounds,
-editable: true
-});
+  regionBox = new google.maps.Rectangle({
+    bounds: regionBounds,
+    editable: true,
+    draggable: true
+  });
 
-regionBox.setMap(map);
+  regionBox.setMap(map);
+  selectRegion=1;
+
+  google.maps.event.addListener(regionBox, 'bounds_changed', showNewRect);
+
 }
 
-To use bounds call
-regionBox.getBounds().getNorthEast();
-regionBox.getBounds().getSouthWest();
-
-*/
+function showNewRect() {
+  $('#rect1').val(regionBox.getBounds().getNorthEast());
+  $('#rect2').val(regionBox.getBounds().getSouthWest());
+}
 
 function reinitialize()
 {
@@ -165,11 +169,12 @@ $(function() {$("[data-toggle=tooltip]").tooltip();});
     <div id="panel">
       <button onclick="toggleHeatmap()">Toggle Heatmap</button>
       <button onclick="changeGradient()">Change gradient</button>
-      <!-- <button onclick="changeRadius()">Change radius</button> -->
       <button onclick="changeOpacity()">Change opacity</button>
+      <button onclick="displayRegionBox()">Select region</button>
       <button data-toggle="modal" data-target="#myModal">Filter</button>
     </div>
     <div id="panel-right">
+      <h2>Worst Counties</h2>
       <h4>Air</h4>
       <p class="panel-a"></p>
       <h4>Earthquake</h4>
@@ -241,6 +246,8 @@ $(function() {$("[data-toggle=tooltip]").tooltip();});
                       </select>
                     </div>
                 </div>
+                <input type="hidden" value="" id="rect1"/>
+                <input type="hidden" value="" id="rect2"/>
                 <div class="modal-footer">
                     <a href="#" id="btn-go" class="btn btn-success btn-md"><span>Go</span></a>
                 </div>

@@ -10,10 +10,12 @@ $(document).ready(function() {
         $wa = $('#weight_air').val();
         $we = $('#weight_earthquake').val();
         $wc = $('#weight_crime').val();
+        $regNE = $('#rect1').val();
+        $regSW = $('#rect2').val();
         $.ajax({
             url:  '/heat_map/go',
             type: 'POST',
-            data: {filter:$chk, wa:$wa, we:$we, wc:$wc},
+            data: {filter:$chk, wa:$wa, we:$we, wc:$wc, ne:$regNE, sw:$regSW},
             success: function(result) {
                 $('#panel-right').show();
                 redraw(result.out);
